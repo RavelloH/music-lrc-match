@@ -82,3 +82,8 @@ for musicfile in os.listdir(origin_file):
                 f.write('[00:00.00] 纯音乐，请欣赏') # 下载失败先替换
                 f.close
 print('下载完毕，共提交%s个下载任务，下载%s个lrc，其中有%s个纯音乐已自动替换，%s个需要注意的下载任务' %(count_file,load,abso_music,len(errorlist)))
+#下面是自动删除有问题的歌词文件，详见readme.md
+#for i in target_file:
+#    if i[:-4] in errorlist:
+#        os.remove(target_file+'/'+i)
+#        print('已删除'+i)       
