@@ -1,7 +1,8 @@
 # music-lrc-match
 ### 基于Python，自动匹配并下载音乐对应的lrc歌词，自动操作，支持模糊搜索、纯音乐填充、自动防重、自动更新新文件等等
 注:兼容网易云内所有音乐，其余音乐软件未做测试
-
+![使用展示](.github/doc/image-3.jpg)
+![使用展示](.github/doc/image-2.jpg)
 ## 使用  
 环境:Python3  
 下载`main.py`，运行即可。  
@@ -16,6 +17,22 @@
 api返回纯音乐时的json无任何lrc内容，程序将自动生成带有`[00:00.00] 纯音乐 请欣赏`的lrc文件
 ### 自动防重&自动更新新文件
 当原有lrc的列表中已存在对应lrc的时候，程序将自动忽略已有匹配的项目并转而更新新项目
+![自动防重展示](.github/doc/image1.jpg)
+### 错误提示
+当提示[下载失败，自动替换为纯音乐]时，说明官方api返回的json中既没有歌词，也没有`nolyric`表示这是纯音乐  
+这有两种可能:
+1.可能网易云无这个音乐的版权
+2.尚未有人贡献对应音乐的歌词
+
+这些错误的音乐的文件名都存储在`errorlist`中，默认自动保留，如果想删除请在最后加入以下代码:(直接加入，不需要额外缩进)
+
+``` python
+for i in target_file:
+    if i[:-4] in errorlist:
+        os.remove(target_file+'/'+i)
+        print('已删除'+i)        
+```
+
 ## 依赖
 1. [网易云音乐官方api](https://music.163.com/api/song/media?id=)
 1. http://cloud-music.pl-fe.cn/  
