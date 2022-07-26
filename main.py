@@ -67,11 +67,11 @@ for musicfile in os.listdir(origin_file):
                 lrc_origin = urlopen('https://music.163.com/api/song/media?id='+str(songid)).read()
                 lrc_json=json.loads(lrc_origin,strict=False)
                 if 'nolyric' in lrc_json:
+                    abso_music += 1
                     f = open(target_file+'/'+musicfile+'.lrc','w+')
                     f.write('[00:00.00] 纯音乐，请欣赏') # 防止纯音乐返回空歌词
                     f.close
                 else:
-                    abso_music += 1
                     f = open(target_file+'/'+musicfile+'.lrc','w+')
                     f.write(lrc_json['lyric'])
                     f.close
