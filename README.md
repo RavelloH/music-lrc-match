@@ -1,8 +1,11 @@
 # music-lrc-match
 ### 基于Python，自动匹配并下载音乐对应的lrc歌词，自动操作，支持模糊搜索、纯音乐填充、自动防重、自动更新新文件等等
 注:兼容网易云内所有音乐，其余音乐软件未做测试
-![使用展示](.github/doc/image-3.jpg)
-![使用展示](.github/doc/image-2.jpg)
+
+![Screenshot_20230205_203747_org qpython qpy](https://user-images.githubusercontent.com/68409330/220139707-745addb3-1997-4e79-995c-2613890a5031.png)
+
+
+
 ## 使用  
 环境:Python3  
 下载`main.py`，运行即可。  
@@ -38,6 +41,26 @@ for i in target_file:
 1. http://cloud-music.pl-fe.cn/  
 ## lrc使用
 生成的lrc文件名与对应音乐的文件名相同，支持歌词显示的HIFI播放器一般将lrc文件与音乐文件放置于同一文件夹下即可，详见对应设备等的说明
+
+## 展示  
+
+- 使用log文件载入配置:
+
+  ![Screenshot_20230205_203245_org qpython qpy](https://user-images.githubusercontent.com/68409330/220139681-d672be64-7a7b-4f36-aa46-c749d25920a1.png)
+  
+----
+
+- 完善的网络重试
+  ![Screenshot_20230205_203853_org qpython qpy](https://user-images.githubusercontent.com/68409330/220139711-7950d7e1-bc92-4c27-a47d-a7cf3efb3b92.png)
+
+----
+
+- 原生进度条
+  ![Screenshot_20230205_200645_org qpython qpy](https://user-images.githubusercontent.com/68409330/220139722-6a5cbd37-389a-4781-8be9-2bdf830608b2.png)
+
+- 运行状态展示
+  ![Screenshot_20230205_204313_org qpython qpy](https://user-images.githubusercontent.com/68409330/220139726-e316db97-9edc-47c5-b4f9-5c843ae9e787.png)
+  ![Screenshot_20230205_204324_org qpython qpy](https://user-images.githubusercontent.com/68409330/220139728-3df1c44b-caed-42de-a1ed-88cb37af4942.png)
 
 ## 关于
 若出现api不稳定或者干脆出现bug的情况请在这里[提个Issue](https://github.com/RavelloH/music-lrc-match/issues/new)
