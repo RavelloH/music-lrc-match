@@ -31,10 +31,9 @@ except:
 
 ## 初始化
 search_api_list=['http://cloud-music.pl-fe.cn', ## 第三方API，访问快，稳定性未知
+                 'https://music.api.ravelloh.top',## 个人自建API，访问慢，稳定性好
                  'https://music.api.coderace.top',
-                 'https://music-api.ravelloh.ml',## 个人自建API，访问慢，稳定性好
                  'https://neteaseapi.imgugu.ink',
-                 ''
                  ]
 search_method='/search?limit=3&type=1&keywords='
 translate_method='/lyric?id='
