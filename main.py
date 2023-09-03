@@ -3,7 +3,7 @@
 ### github.com/ravelloh/music-lrc-match
 #### MICENCE: MIT
 ##### By: RavelloH
-##### 更新于2023/02/04
+##### 更新于2023/09/03
 
 logo='''
                       _             _                                 _       _     
@@ -14,7 +14,7 @@ logo='''
  |_| |_| |_|\__,_|___/_|\___|      |_|_|  \___|      |_| |_| |_|\__,_|\__\___|_| |_|
                                                                                         
 '''
-version='Version: 2023/02/04 by RavelloH'
+version='Version: 2023/09/03 by RavelloH'
 
 import os
 import time
@@ -413,6 +413,9 @@ def search_parse():
     global songid
     try:
         text = json.loads(search_result)
+        t = text['result']
+        t = text['result']['songs']
+        t = text['result']['songs'][0]
         songid = text['result']['songs'][0]['id']
         songname = text['result']['songs'][0]['name']
         artist = ''
@@ -425,6 +428,9 @@ def search_parse():
         
         ## 尝试第二搜索结果
         try:
+            t = text['result']
+            t = text['result']['songs']
+            t = text['result']['songs'][0]
             songid2 = text['result']['songs'][1]['id']
             songname2 = text['result']['songs'][1]['name'] 
             artist2 = ''
