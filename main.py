@@ -222,7 +222,7 @@ def importlog():
         return
     else:
         try:
-            with open(log_file,'r') as read_file:
+            with open(log_file,'r',encoding='utf-8') as read_file:
                 log_content = read_file.readlines()
                 if log_content == []:
                     initlog()
@@ -272,7 +272,7 @@ def importlog():
 ## 日志初始化
 def initlog():
     ## 覆写
-    with open(log_file,'w+') as write_file:
+    with open(log_file,'w+',encoding='utf-8') as write_file:
         write_file.write(log_template)
     return
     
@@ -443,11 +443,11 @@ def search_parse():
             
             ## 决策
             if similar(standard_file_name2,standard_cachename2) > similar(standard_file_name,standard_cachename):
-                	songid = songid2
-                	songname = songname2
-                	artist = artist2
-                	cachename=cachename2
-                	standard_cachename = standard_cachename2
+                    songid = songid2
+                    songname = songname2
+                    artist = artist2
+                    cachename=cachename2
+                    standard_cachename = standard_cachename2
         except:
            pass
         
@@ -460,7 +460,7 @@ def search_parse():
             songid = '000000'
             return
     except:
-        print(error+'解析失败: '+filename)
+        print(error+'解析失败: '+file_name)
 
 def lrc():
     global lrc_result
@@ -526,13 +526,13 @@ def lrc_make():
             abso_music_list.append(music_file)
             print(done+'检测到纯音乐: '+file_name)
         else:
-            with open(target_file+'/'+file_name+'.lrc','w+') as f:
+            with open(target_file+'/'+file_name+'.lrc','w+',encoding='utf-8') as f:
                 f.write(lrc_json['lyric'])  
             print(success+'LRC写入成功: '+file_name)
             success_list.append(music_file)
     except:   	
         errorlist.append(music_file)
-        os.remove(target_file+'/'+file_name+'.lrc','w+')
+        os.remove(target_file+'/'+file_name+'.lrc')
         print(error+'lrc写入失败: '+music_file)
         return
                 
@@ -549,7 +549,7 @@ def trans_lrc_make():
             abso_music_list.append(music_file) 
             print(done+'检测到纯音乐: '+file_name)
         else:
-            with open(target_file+'/'+file_name+'.lrc','w+') as f:
+            with open(target_file+'/'+file_name+'.lrc','w+',encoding='utf-8') as f:
                 f.write(lrc_json['tlyric']['lyric'])  
             print(success+'LRC写入成功: '+file_name)
             success_list.append(music_file)
@@ -611,11 +611,11 @@ def writelog():
     print(success+'主程序已完成，等待日志写入中:')
     if log_file != 'skip':
         # 加入新模板
-        with open(log_file,'a+') as f:
+        with open(log_file,'a+',encoding='utf-8') as f:
             f.seek(0)
             f.write(separator)
             
-        with open(log_file,'a+') as f:
+        with open(log_file,'a+',encoding='utf-8') as f:
             f.seek(0)
             f.write(log_template)
             
