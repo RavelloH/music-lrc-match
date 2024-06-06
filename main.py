@@ -3,7 +3,6 @@
 ### github.com/ravelloh/music-lrc-match
 #### MICENCE: MIT
 ##### By: RavelloH
-##### 更新于2023/09/03
 
 logo='''
                       _             _                                 _       _     
@@ -30,7 +29,7 @@ except:
     tqdm = False
 
 ## 初始化
-search_api_list=['http://cloud-music.pl-fe.cn', ## 第三方API，访问快，稳定性未知
+search_api_list=['https://music-api.0m2.cn', ## 第三方API，访问快，稳定性未知
                  'https://music.api.ravelloh.top',## 个人自建API，访问慢，稳定性好
                  'https://music.api.coderace.top',
                  'https://neteaseapi.imgugu.ink',
@@ -71,7 +70,7 @@ separator = '\n================================\n'
 
 ## 屏幕宽度预设 
 try:
-    width = os.get_terminal_size().columns
+    width = os.get_terminal_size().columns+1
 except:
     width = 50
 ## 相似度检查
@@ -281,6 +280,7 @@ def setup():
     global target_file
     global music_list
     global lrc_list
+    global optionlang
     music_list = []
     lrc_list = []
     if log_setting != [''] and log_file != 'skip':
@@ -326,6 +326,9 @@ def setup():
             print(error+'目录打开失败:目录不存在。将重试：')
             setup()
             return
+    if log_setting != [''] and log_file != 'skip':
+        optionlang = log_setting[2]
+        print(done+'已从log中导入了lrc语言偏好:'+optionlang)
     try:
         for file_name in os.listdir(target_file):
             if '.lrc' in file_name:
@@ -453,13 +456,16 @@ def search_parse():
         
         ## 判定相似度
         if similar(standard_file_name,standard_cachename) > 75.0:
+            print(' '*(width-1),end="",flush=True)
             print(success+'搜索-'+str(similar(standard_file_name,standard_cachename))+'%'+' %s <=> %s' %(standard_file_name,standard_cachename))
         else:
+            print(' '*(width-1),end="",flush=True)
             print(warning+'搜索-'+str(similar(standard_file_name,standard_cachename))+'%'+' %s <=> %s' %(standard_file_name,standard_cachename))
             print(warning+'歌曲信息匹配度过低，已跳过')
             songid = '000000'
             return
     except:
+        print(' '*(width-1),end="",flush=True)
         print(error+'解析失败: '+file_name)
 
 def lrc():
@@ -496,6 +502,7 @@ def getlrc():
     lrc()
     if lrc_result == '':
         errorlist.append(music_file)
+        # print(' '*(width-1),end="",flush=True)
         print(error+'lrc获取失败: '+file_name)
         return
     else:
@@ -509,6 +516,7 @@ def getlrc_translate():
     trans_lrc()
     if lrc_result == '':
         errorlist.append(music_file)
+        # print(' '*(width-1),end="",flush=True)
         print(error+'lrc获取失败: '+file_name)
         return
     else:
@@ -519,20 +527,24 @@ def lrc_make():
         lrc_json=json.loads(lrc_result,strict=False)
     except:
         errorlist.append(music_file)
+        # print(' '*(width-1),end="",flush=True)
         print(error+'lrc解析失败: '+music_file)
         return
     try:
         if 'nolyric' in lrc_json or '"nolyric":true' in lrc_json:
             abso_music_list.append(music_file)
+            # print(' '*(width-1),end="",flush=True)
             print(done+'检测到纯音乐: '+file_name)
         else:
             with open(target_file+'/'+file_name+'.lrc','w+',encoding='utf-8') as f:
                 f.write(lrc_json['lyric'])  
+            # print(' '*(width-1),end="",flush=True)
             print(success+'LRC写入成功: '+file_name)
             success_list.append(music_file)
     except:   	
         errorlist.append(music_file)
         os.remove(target_file+'/'+file_name+'.lrc')
+        # print(' '*(width-1),end="",flush=True)
         print(error+'lrc写入失败: '+music_file)
         return
                 
@@ -542,21 +554,25 @@ def trans_lrc_make():
         lrc_json=json.loads(lrc_result,strict=False)
     except:
         errorlist.append(music_file)
+        # print(' '*(width-1),end="",flush=True)
         print(error+'lrc解析失败: '+music_file)
         return
     try:
         if '纯音乐，' in str(lrc_json): 
             abso_music_list.append(music_file) 
+            # print(' '*(width-1),end="",flush=True)
             print(done+'检测到纯音乐: '+file_name)
         else:
             with open(target_file+'/'+file_name+'.lrc','w+',encoding='utf-8') as f:
                 f.write(lrc_json['tlyric']['lyric'])  
+            # print(' '*(width-1),end="",flush=True)
             print(success+'LRC写入成功: '+file_name)
             success_list.append(music_file)
             	
     except:
         errorlist.append(music_file)
         os.remove(target_file+'/'+file_name+'.lrc','w+')
+        # print(' '*(width-1),end="",flush=True)
         print(error+'lrc写入失败: '+music_file)
         return
         
@@ -575,6 +591,7 @@ def main():
         search(file_name)
         if search_result == '':
             errorlist.append(music_file)
+            print(' '*(width-1),end="",flush=True)
             print(error+'搜索错误: '+music_file)
         else:
             search_parse()
@@ -595,7 +612,7 @@ def main():
         percent_ =str(int(load*100/len(todo_files))).zfill(3)
         print('%s/%s-[%s%s]%s%% \033[0;32m%s\033[0m \033[0;31m%s\033[0m \033[0;33m%s\033[0m \033[0;36m%s\033[0m' %(load_,todo_,'|'*int((load/len(todo_files))*(width-31)),' '*((width-31)-int((load/len(todo_files))*(width-31))),percent_,success_,fail_,warning_,abso_),end='\r')
         time.sleep(0.1)
-        print(' '*(width-1),end="",flush=True)
+        
     load_=str(load).zfill(3)
     todo_=str(len(todo_files)).zfill(3)
     success_=str(len(success_list)).zfill(3)
@@ -603,6 +620,7 @@ def main():
     abso_ = str(len(abso_music_list)).zfill(3)
     warning_ = str(len(warning_list)).zfill(3)
     percent_ =str(int(load*100/len(todo_files))).zfill(3)
+    print(' '*(width-1),end="",flush=True)
     print(success+'主程序已完成') 
     print(done+'共提交%s个任务，其中处理了%s个，实际写入了%s个lrc文件，有%s个纯音乐，%s次警告，%s个错误' %(int(todo_),int(load_),int(success_),int(abso_),int(warning_),int(fail_)))
     
@@ -614,10 +632,6 @@ def writelog():
         with open(log_file,'a+',encoding='utf-8') as f:
             f.seek(0)
             f.write(separator)
-            
-        with open(log_file,'a+',encoding='utf-8') as f:
-            f.seek(0)
-            f.write(log_template)
             
         
         # 处理数据
