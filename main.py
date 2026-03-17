@@ -4,7 +4,7 @@
 #### MICENCE: MIT
 ##### By: RavelloH
 
-logo='''
+logo=r'''
                       _             _                                 _       _     
                      (_)           | |                               | |     | |    
   _ __ ___  _   _ ___ _  ___ ______| |_ __ ___ ______ _ __ ___   __ _| |_ ___| |__  
@@ -531,7 +531,7 @@ def lrc_make():
         print(error+'lrc解析失败: '+music_file)
         return
     try:
-        if 'nolyric' in lrc_json or '"nolyric":true' in lrc_json:
+        if lrc_json.get('nolyric', False):
             abso_music_list.append(music_file)
             # print(' '*(width-1),end="",flush=True)
             print(done+'检测到纯音乐: '+file_name)
@@ -571,7 +571,7 @@ def trans_lrc_make():
             	
     except:
         errorlist.append(music_file)
-        os.remove(target_file+'/'+file_name+'.lrc','w+')
+        os.remove(target_file+'/'+file_name+'.lrc')
         # print(' '*(width-1),end="",flush=True)
         print(error+'lrc写入失败: '+music_file)
         return
